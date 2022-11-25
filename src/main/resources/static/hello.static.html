@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>static content</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+</head>
+<body>
+
+<form method="post" action="/signUp">
+    <div class="container">
+        <h1>회원가입</h1>
+        <div class="form-group">
+            <label for="inputEmail4">아이디</label>
+            <input type="text" class="form-control" id="inputEmail4" name="userId" placeholder="사용자 아이디">
+        </div>
+        <div class="form-group">
+            <label for="inputPassword4">비밀번호</label>
+            <input type="password" class="form-control" id="inputPassword4" name="userPw" placeholder="사용자 비밀번호">
+        </div>
+        <div class="form-group">
+            <label for="inputAddress">이름</label>
+            <input type="text" class="form-control" id="inputAddress" name="userName" placeholder="사용자 이름">
+        </div>
+        <div class="form-group">
+            <label for="inputEmail">이메일</label>
+            <input type="email" class="form-control" id="inputEmail" name="userEmail" placeholder="사용자 이메일">
+        </div>
+        <div class="form-group">
+            <label for="inputNick">닉네임</label>
+            <input type="text" class="form-control" id="inputNick" name="userNick" placeholder="사용자 닉네임">
+        </div>
+        <div class="form-group">
+            <label for="inputReg_data">등록일자</label>
+            <input type="text" class="form-control" id="inputReg_data" name="userReg_data" placeholder="사용자 등록일자">
+        </div>
+        <div class="form-group">
+            <label for="inputCompany_name">회사이름</label>
+            <input type="text" class="form-control" id="inputCompany_name" name="userCompany_name" placeholder="회사 이름">
+        </div>
+        <button type="submit" class="btn btn-primary">가입 완료</button>
+    </div>
+
+
+<h3 style="color:skyblue">카카오 로그인</h3>
+<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+
+
+<ul>
+    <li onclick="kakaoLogin();">
+        <a href="javascript:void(0)">
+
+            <span>카카오 로그인</span>
+        </a>
+    </li>
+    <li onclick="kakaoLogout();">
+        <a href="javascript:void(0)">
+            <span>카카오 로그아웃</span>
+        </a>
+    </li>
+</ul>
+
+<!-- 카카오 스크립트 -->
+<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+<script>
+Kakao.init('47bf5fbeaeac14949d9e8c3baa8b891d'); //발급받은 키 중 javascript키를 사용해준다.
+console.log(Kakao.isInitialized()); // sdk초기화여부판단
+//카카오로그인
+function kakaoLogin() {
+    Kakao.Auth.login({
+      success: function (response) {
+        Kakao.API.request({
+          url: '/v2/user/me',
+          success: function (response) {
+        	  console.log(response)
+          },
+          fail: function (error) {
+            console.log(error)
+          },
+        })
+      },
+      fail: function (error) {
+        console.log(error)
+      },
+    })
+  }
+//카카오로그아웃
+function kakaoLogout() {
+    if (Kakao.Auth.getAccessToken()) {
+      Kakao.API.request({
+        url: '/v1/user/unlink',
+        success: function (response) {
+        	console.log(response)
+        },
+        fail: function (error) {
+          console.log(error)
+        },
+      })
+      Kakao.Auth.setAccessToken(undefined)
+    }
+  }
+</script>
+
+</form>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hello.hellospring.mapper.BoardMapper">
+
+    <select id="getLists" resultType="rh">
+    select * from rh order by idx desc
+    </select>
+
+    <insert id="boardInsert" parameterType="rh">
+        insert into rh(title, writer, content)
+        values (#{title}, #{writer}, #{content})
+    </insert>
+
+    <select id="userLists" resultType="UserVo">
+        select * from UserVo order by idx desc
+    </select>
+
+    <insert id="uesrInsert" parameterType="UserVo">
+        insert into UserVo(id, pw, name, nick, email, reg_date, login_type, company_name)
+        values (#{id}, #{pw}, #{name}, #{nick}, #{email}, #{reg_date}, #{login_type}, #{company_name})
+    </insert>
+
+</mapper>
